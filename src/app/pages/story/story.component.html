@@ -1,0 +1,51 @@
+<div class="container mt-2">
+    <div class="row mb-3 justify-content-center px-3">
+
+        <h5 class="text-start col-8">{{ currentStory?.storyName }}</h5>
+
+
+        <div class="dropdown text-end col-4" style=" margin-top: -9px; height: 35px; padding: 0px;">
+            <a class="btn" href="#" style="padding: 0px;" role="button" id="dropdownIcon" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-list" style="font-size: 30px;  color: white;"></i>
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownIcon">
+              <li><a class="dropdown-item" (click)="showSpecialRules()" href="javascript:void(0);">特殊规则</a></li>
+              <li><a class="dropdown-item" (click)="finishGame()" href="javascript:void(0);">结束游戏</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row mb-2 justify-content-center px-3">
+        <div class="info-container">
+            <div *ngFor="let item of infoList" [class]="{ 'info': item.livingNumber <= item.TotalNumber, 'info-red': item.livingNumber > item.TotalNumber  }">{{ item.RoleType }} {{ item.livingNumber }}/{{ item.TotalNumber }}</div>
+        </div>
+    </div>
+
+    <div class="row mb-2 px-3 justify-content-center">
+        <app-player *ngFor="let player of playerList" [(currentStory)]="this.currentStory!" [(player)]="currentStory!.player[player.id - 1]" [(skill)]="skill"
+         [(selectCount)]="selectCount" (event)="eventHandle($event)" class="col-3 px-0"></app-player>
+    </div>
+
+    <hr>
+
+    <ul #messagebox class="list-group list-group-flush" style="height: 280px; overflow-y: auto; overflow-x: hidden;">
+
+        <li *ngFor="let message of this.currentStory?.history">
+            <span [innerHTML]="message"></span>
+        </li>
+    </ul>
+
+    <hr>
+
+
+    <div class="row justify-content-between mb-2">
+        <button class="btn btn-primary col-6" style="width: 120px; margin-left: 15px;" (click)="previous()">上一步</button>
+        <button class="btn btn-primary col-6" style="width: 120px; margin-right: 15px;" (click)="next()">下一步</button>
+    </div>
+
+
+
+
+</div>

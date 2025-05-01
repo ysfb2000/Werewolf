@@ -1,0 +1,341 @@
+<div class="player-container" [ngStyle]="background" (click)="show()">
+    <img *ngIf="showDeathMark"  class="cross" src="/assets/img/cross.png" alt="cross">
+
+    <div class="player-no">{{ currentPlayer!.id }}</div>
+    <div [class]="{ 'player-role-p': currentPlayer!.role?.isPowerRole, 'player-role': !currentPlayer!.role?.isPowerRole }">{{ currentPlayer!.role?.roleType }}</div>
+    <div *ngIf="currentPlayer!.role?.roleType != '机械狼'" class="player-status">{{ currentPlayer!.isDead ? '出局' : '存活' }}</div>
+    <div *ngIf="currentPlayer!.role?.roleType == '机械狼'" class="player-status">{{ currentPlayer!.simulatedRole == '(未知)' ? '存活' : currentPlayer!.simulatedRole }}</div>
+
+    <img *ngIf="currentPlayer!.isLover" class="heart" src="/assets/img/heart.png" alt="heart">
+    <img *ngIf="currentPlayer!.isPolice" class="police" src="/assets/img/badge.png" alt="police">
+    <img *ngIf="currentPlayer!.isCharmed" class="charmed" src="/assets/img/charmed.png" alt="charmed">
+    <img *ngIf="currentPlayer!.isDreamed" class="dream" src="/assets/img/dream.png" alt="dream">
+    <img *ngIf="currentPlayer!.isDreamedPreviously" class="dream" style="opacity: 0.5;" src="/assets/img/dream.png" alt="dream">
+    <img *ngIf="currentPlayer!.isGuarded" class="shield" src="/assets/img/shield.png" alt="shield">
+    <img *ngIf="currentPlayer!.isGuarded" class="shield" src="/assets/img/shield.png" alt="shield">
+    <img *ngIf="currentPlayer!.isSimulationGuarded" class="shield" src="/assets/img/shield.png" alt="shield">
+    <img *ngIf="currentPlayer!.isGuardedPreviously" class="shield" style="opacity: 0.5;" src="/assets/img/shield.png" alt="shield">
+    <img *ngIf="currentPlayer!.isSilent" class="silent" src="/assets/img/silence.png" alt="silent">
+    <img *ngIf="currentPlayer!.isConfused" class="confused" src="/assets/img/confused.png" alt="confused">
+    <img *ngIf="currentPlayer!.isCanNotSpeak" class="cannotspeak" src="/assets/img/cannotspeak.png" alt="notspeak">
+    <img *ngIf="currentPlayer!.isLucky" class="lucky" src="/assets/img/rainbow.png" alt="lucky">
+    <img *ngIf="currentPlayer!.isFear" class="fear" src="/assets/img/fear.png" alt="fear">
+    <img *ngIf="currentPlayer!.isFearPreviously" class="fear" style="opacity: 0.5;" src="/assets/img/fear.png" alt="fear">
+    <img *ngIf="currentPlayer!.isCursed" class="cursed" src="/assets/img/cruse.png" alt="Cursed">
+    <img *ngIf="currentPlayer!.isPoisoned" class="poisoned" src="/assets/img/poison.png" alt="Poisoned">
+    <img *ngIf="currentPlayer!.isGiftPoisoned" class="poisoned" src="/assets/img/poison.png" alt="Poisoned">
+    <img *ngIf="currentPlayer!.isSimulationPoisoned" class="poisoned" src="/assets/img/poison.png" alt="Poisoned">
+    <img *ngIf="currentPlayer!.isHealed" class="healed" src="/assets/img/heal.png" alt="Healed">
+    <img *ngIf="currentPlayer!.isKilledByWolf" class="killedByWolf" src="/assets/img/cross.png" alt="killedByWolf">
+    <img *ngIf="currentPlayer!.isKilledByDeamonHunter" class="killedByDeamonHunter" src="/assets/img/bow.png" alt="bow">
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" #myModal>
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content" style="width:360px; margin: auto;">
+        <div class="modal-header">
+            <h5 class="modal-title">状态设置</h5>
+            <button type="button" class="btn-close" (click)="close()"></button>
+        </div>
+        <div class="modal-body" style="padding-top: 15px;">
+            <!-- 选择身份 -->
+            <div class="form-group mb-3 px-3">
+                <select class="form-select form-select-sm" style="width: 220px;" id="role" [(ngModel)]="selectedRole" (ngModelChange)="onRoleChange($event)">
+                    <option *ngFor="let role of roles" [value]="role.roleType">{{ role.roleType }}</option>
+                </select>
+            </div>
+
+            <!-- 复选框 选择状态 -->
+            <div class="row mb-5 px-3">        
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isSilent"> <label>沉默</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isCursed"> <label>诅咒</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isLucky"> <label>幸运儿</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isCanNotSpeak"> <label>禁言</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isLover"> <label>情侣</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isCharmed"> <label>魅惑</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isDreamed"> <label>梦游</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isDreamedPreviously"> <label>已梦游</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isGuarded"> <label>守卫</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isSimulationGuarded"> <label>机械守卫</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isGuardedPreviously"> <label>已守卫</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isFear"> <label>恐惧</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isFearPreviously"> <label>已恐惧</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isConfused"> <label>迷惑</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.hasPoison"> <label>毒药</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.hasHeal"> <label>解药</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isPoisoned"> <label>中毒</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isGiftPoisoned"> <label>中毒(赠)</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isSimulationPoisoned"> <label>中毒(机械)</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isHealed"> <label>解药治疗</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isForetelled"> <label>被预言</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isGiftForetelled"> <label>被预言(赠)</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isKilledByDeamonHunter"> <label>被猎魔</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isPolice"> <label>警长</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.hasDamageReflection"> <label>有反伤</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isKillWrongPerson"> <label>错杀</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isGiveLuckyToWolf"> <label>幸运给狼</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.hasForetell"> <label>预言(赠)</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.hasGiftPoison"> <label>毒药(赠)</label>
+                </div>
+
+                <div class="col-4 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.hasGuard"> <label>守卫(赠)</label>
+                </div>
+
+                <div class="col-12 mt-3 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isKilledByWolf"> <label>被狼杀</label>
+                </div>
+
+                <div class="col-12 mt-3 special-rule">
+                    <input type="checkbox" [(ngModel)]="currentPlayer!.isDead" (ngModelChange)="out()"> <label>出局</label>
+                </div>
+    
+            </div>
+
+            <!-- 专属技能 -->
+             <!-- 女巫 -->
+             <div *ngIf="currentPlayer!.role?.roleType!.toString() == '女巫'" class="row mt-3 mb-1 justify-content-center">
+                <button *ngIf="currentPlayer!.hasPoison" (click)="poison()" class="btn btn-warning col-3 status-btn">毒药</button>
+                <button *ngIf="currentPlayer!.hasHeal" (click)="heal()" class="btn btn-warning col-3 status-btn">解药</button>
+             </div>
+
+            <!-- 骑士 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '骑士'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="duel()">决斗</button>
+            </div>
+
+            <!-- 预言家 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '预言家'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn"  (click)="foreTell()">预言</button>
+            </div>
+
+            <!-- 守卫 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '守卫'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="guard()">守卫</button>
+            </div>
+
+            <!-- 猎人 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '猎人'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="hunt()">猎杀</button>
+            </div>
+
+            <!-- 摄梦人 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '摄梦人'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="dream()">摄梦</button>
+            </div>
+
+            <!-- 猎魔人 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '猎魔人'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-5 status-btn" (click)="nightHunt()">夜间狩猎</button>
+            </div>
+
+            <!-- 奇迹商人 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '奇迹商人'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-5 status-btn" (click)="givePower()">给予能力</button>
+            </div>
+
+            <!-- 禁言长老 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '禁言长老'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="canNotSpeak()">禁言</button>
+            </div>
+
+            <!-- 丘比特 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '丘比特'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-5 status-btn" (click)="selectLover()">选择情侣</button>
+            </div>
+
+            <!-- 幸运儿 -->
+            <div *ngIf="currentPlayer!.isLucky" class="row mt-3 mb-1 justify-content-center">
+                <button *ngIf="currentPlayer!.hasForetell" (click)="giftForeTell()" class="btn btn-warning col-3 status-btn">预言(赠)</button>
+                <button *ngIf="currentPlayer!.hasGiftPoison" (click)="giftPoison()" class="btn btn-warning col-3 status-btn">毒药(赠)</button>
+                <button *ngIf="currentPlayer!.hasGuard" (click)="giftGuard()" class="btn btn-warning col-3 status-btn">守卫(赠)</button>
+            </div>
+
+            <!-- 狼人 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '狼人'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="selfDestruction()">自爆</button>
+            </div>
+
+            <!-- 白狼王 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '白狼王'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-5 status-btn" (click)="WolfKingSelfDestruction()">白狼王自爆</button>
+            </div>
+
+            <!-- 狼美人 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '狼美人'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="charmed()">魅惑</button>
+            </div>
+
+            <!-- 血月使徒 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '血月使徒'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-5 status-btn" (click)="bloodMoonSelfDestruction()">血月自爆</button>
+            </div>
+
+            <!-- 噩梦之影 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '噩梦之影'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="fear()">恐惧</button>
+                <button class="btn btn-warning col-3 status-btn" (click)="selfDestruction()">自爆</button>
+            </div>
+
+            <!-- 石像鬼 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '石像鬼'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="check()">查验</button>
+            </div>
+
+            <!-- 子狐 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '子狐'" class="row mt-3 mb-1 justify-content-center">
+                <button *ngIf="currentPlayer!.hasConfuse" class="btn btn-warning col-3 status-btn" (click)="confuse()">迷惑</button>
+            </div>
+
+            <!-- 通灵师 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '通灵师'" class="row mt-3 mb-1 justify-content-center">
+                <button class="btn btn-warning col-3 status-btn" (click)="channel()">通灵</button>
+            </div>
+
+            <!-- 机械狼 -->
+            <div *ngIf="currentPlayer!.role?.roleType!.toString() == '机械狼'" class="row mt-3 mb-1 justify-content-center">
+                <button *ngIf="currentPlayer!.simulatedRole == '(未知)'" class="btn btn-warning col-3 status-btn" (click)="simulating()">模仿</button>
+                <button *ngIf="currentPlayer!.simulatedRole == '通灵师'" class="btn btn-warning col-3 status-btn" (click)="simulationChannel()">机械通灵</button>
+                <button *ngIf="currentPlayer!.hasSimulatedWitch" class="btn btn-warning col-3 status-btn" (click)="simulationPoison()">机械毒药</button>
+                <button *ngIf="currentPlayer!.simulatedRole == '猎人'" class="btn btn-warning col-3 status-btn" (click)="simulationHunt()">机械狩猎</button>
+                <button *ngIf="currentPlayer!.simulatedRole == '守卫'" class="btn btn-warning col-3 status-btn" (click)="simulationGuard()">机械守卫</button>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary btn-sm" style="width: 80px;" (click)="detail()">详情</button>
+            <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="close()">Cancel</button>
+            <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="submit()">OK</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="selectGiftModal" tabindex="-1" #selectGiftModal>
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content" style="width:300px; margin: auto;">
+        <div class="modal-header">
+            <h5 class="modal-title">选择礼物</h5>
+        </div>
+        <div class="modal-body">
+            <!-- 单选框选择三个礼物 -->
+            <form class="form-group mb-3">
+                <div class="mb-3">
+                    <label>
+                        <input type="radio" name="gift" [(ngModel)]="selectedGift" value="foretell" />
+                        预言(赠)
+                    </label>
+                </div>
+
+                <div class="mb-3">
+                    <label>
+                        <input type="radio" name="gift" [(ngModel)]="selectedGift" value="poison" />
+                        毒药(赠)
+                    </label>
+                </div>
+
+                
+                <div class="mb-3">
+                    <label>
+                        <input type="radio" name="gift" [(ngModel)]="selectedGift" value="guard" />
+                        守卫(赠)
+                    </label>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="getGift()">OK</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+

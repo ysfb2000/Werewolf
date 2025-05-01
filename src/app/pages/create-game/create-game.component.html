@@ -1,0 +1,81 @@
+<div class="container theme-dark">
+    <div class="row  text-center">
+        <div class="col-md-12 text-center mt-2 mb-2">
+          <h2>开始新游戏</h2>
+        </div>
+    </div>
+
+    <!-- 输入游戏名称： -->
+    <div class="row mb-4 px-4">
+        <label for="gameName" class="col-md-12 text-start mb-1">游戏名称：</label>
+        <div class="col-md-12">
+            <input type="text" class="form-control" placeholder="请输入游戏名称" [(ngModel)]="gameName">
+        </div>
+    </div>
+
+
+    <div class="row mb-2 px-4">
+        <label for="gameName" class="col-md-12 text-start mb-1">版本选择：</label>
+        <div class="col-md-12">
+            <select class="form-select" [(ngModel)]="selectedVersion" (ngModelChange)="onEditionChange($event)">
+                <option *ngFor="let item of editionList" [value]="item.editionName">{{ item.editionName }} - {{ item.PlayerCount }}人</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 显示游戏角色和人数： -->
+    <div class="row mb-2 px-4">
+        <label for="gameName" class="col-md-12 text-start mb-1">游戏角色：</label>
+
+        <div class="col-6">
+            <div class="mb-1 text-start" *ngFor="let role of villagerRoles; let i = index">
+                {{role.name}} X {{role.count}}
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="mb-1 text-start" *ngFor="let role of werewolfRoles; let i = index">
+                {{role.name}} X {{role.count}}
+            </div>
+        </div>
+
+        <div *ngIf="netralRoles.length > 0" class="col-6 mt-2">
+            <div>
+                中立
+            </div>
+            <div class="mb-1 text-start" *ngFor="let role of netralRoles; let i = index">
+                {{role.name}} X {{role.count}}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 显示特殊规则： -->
+    <div class="row mb-3 px-4">
+        <label class="col-md-12 text-start mb-1">特殊规则：</label>
+
+        <div class="col-12">
+            <div class="mb-1 text-start" *ngFor="let rule of rules; let i = index">
+              ✓ &nbsp; {{rule.name}}
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- 保存，返回按钮 -->
+    <div class="row justify-content-center mt-3">
+        <div class="col-auto">
+            <button class="btn btn-primary" style="width: 150px; margin-right: 50px;" (click)="createGame()">创建游戏</button>
+            <button class="btn btn-primary" style="width: 150px;" (click)="back()">返回</button>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<app-message-box #myModal></app-message-box>
+
+

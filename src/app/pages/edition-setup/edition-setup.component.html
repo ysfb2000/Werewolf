@@ -1,0 +1,79 @@
+<div class="container theme-dark">
+
+    <div class="d-flex justify-content-between align-items-center px-3 py-2">
+        <div class="flex-grow-1 text-center mt-1 position-relative">
+            <h3 style="margin-top: 3px; height: 30px;">版本设置</h3>
+      
+            <!-- Right-side button, absolutely positioned -->
+            <button *ngIf="isDefault != 'true'" class="btn btn-sm position-absolute end-0 top-50 translate-middle-y" style="margin-top: -4px;" (click)="deleteEdition()" >
+                <i class="bi  bi-dash-circle" style="color: aliceblue; font-size: 25px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 输入版本名称： -->
+    <div class="row mb-3">
+
+        <div class="col-md-12">
+            <input type="text" style="width: 95%;" class="form-control mx-auto" placeholder="请输入版本名称" [(ngModel)]="editionName">
+        </div>
+    </div>
+
+    <!-- 显示人数 -->
+    <div class="row mb-3 px-3 text-center" >
+        <span>村民X{{ villagerCount }} 狼人X{{ wolfCount }} 中立X{{ neturalsCount }}</span>
+    </div>
+
+    <!-- 选择玩家人数： -->
+    <div class="mb-3" style="display: flex; justify-content: center; flex-wrap: wrap;">
+
+        <app-role-square *ngFor="let item of roleList" class="px-0" [roleName]="item.name" [(roleNumber)]="item.selectedCount" (roleNumberChange)="roleNumberChange()"></app-role-square>
+
+    </div>
+
+    <!-- 特殊规则 -->
+    <div class="row mb-3 px-3">
+        <label class="col-md-12 text-start mb-2">特殊规则</label>
+
+        <div class="col-6 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['有警长']"> 有警长
+        </div>
+
+        <div class="col-6 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['警长1.5票']"> 警长1.5票
+        </div>
+
+        <div class="col-12 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['所有神民死亡狼即获胜']"> 所有神民死亡则狼胜利
+        </div>
+
+        <div class="col-12 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['所有平民死亡狼即获胜']"> 所有平民死亡则狼胜利
+        </div>
+
+        <div class="col-12 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['狼首夜不能攻击']"> 狼首夜不能攻击
+        </div>
+
+        <div *ngIf="isShowHunterRule" class="col-12 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['猎人被公投出局可开枪']"> 猎人被公投出局可开枪
+        </div>
+
+        <div *ngIf="isShowWitchRule" class="col-12 special-rule">
+            <input type="checkbox" [(ngModel)]="selectedSpecialRules['女巫首夜可自救']"> 女巫首夜可自救
+        </div>
+
+
+    </div>
+
+    <!-- 保存，返回按钮 -->
+    <div class="row justify-content-center mt-5 mb-3">
+        <div class="col-auto">
+            <button *ngIf="isDefault != 'true'" class="btn btn-primary" style="width: 150px; margin-right: 50px;" (click)="create()">创建</button>
+            <button class="btn btn-primary" style="width: 150px;" (click)="back()">返回</button>
+        </div>
+    </div>
+</div>
+
+<app-message-box #myModal [url]="url"></app-message-box>
+<app-confirm-box #confirmBox (ok)="delete()"></app-confirm-box>

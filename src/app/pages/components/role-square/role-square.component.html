@@ -1,0 +1,10 @@
+<div class="role-container">
+    <div class="role-reset">
+        <i [hidden]="roleNumber() <= 0" class="bi bi-dash" (click)="reset()"></i>
+    </div>
+    <div  (click)="add()">
+        <div class="role-name">{{ roleName() }}</div>
+        <div class="role-number">{{ roleNumber() }}</div>
+    </div>
+
+</div>

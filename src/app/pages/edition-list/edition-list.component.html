@@ -1,0 +1,46 @@
+<div class="container theme-dark">
+
+
+    <div class="d-flex justify-content-between align-items-center px-3 py-2">
+        <div class="flex-grow-1 text-center mt-1 position-relative">
+            <h3 style="margin-top: 3px; height: 30px;">版本列表</h3>
+      
+            <!-- Right-side button, absolutely positioned -->
+            <button class="btn btn-sm position-absolute end-0 top-50 translate-middle-y" style="margin-top: -4px;" (click)="addEdition()" >
+                <i class="bi bi-plus-lg" style="color: aliceblue; font-size: 25px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <ul class="list-group list-group-flush" >
+
+        <li *ngFor="let edition of editionList" class="list-group-item edition-list" (click)="onEditionClick(edition)">
+            <div>{{ edition.editionName }} - {{ edition.PlayerCount }}人 <span *ngIf="edition.isDefault">标准版</span></div>
+            <div class="edition-list-description">
+                <span  *ngFor="let role of edition.player">
+                    <span *ngIf="role.camp == CampType.Villager"  class="edition-list-role">{{ role.role }}X{{ role.number }} </span>
+                </span>
+            </div>
+            <div class="edition-list-description">
+                <span  *ngFor="let role of edition.player">
+                    <span *ngIf="role.camp == CampType.Werewolf"  class="edition-list-role">{{ role.role }}X{{ role.number }} </span>
+                </span>
+            </div>
+            <div class="edition-list-description">
+                <span  *ngFor="let role of edition.player">
+                    <span *ngIf="role.camp == CampType.Neutral"  class="edition-list-role">{{ role.role }}X{{ role.number }} </span>
+                </span>
+            </div>
+        </li>
+
+
+    </ul>
+
+    <!-- 保存，返回按钮 -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-auto">
+            <button class="btn btn-primary" style="width: 150px;" (click)="back()">返回</button>
+        </div>
+    </div>
+
+</div>
