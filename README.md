@@ -1,5 +1,15 @@
 # WereWolvesAssistance
 
+This is a private project developed to assist with running the popular party board game Werewolf.
+The application was built using Angular v19 and Bootstrap for the user interface, and it was deployed on AWS for accessibility and scalability. Although the app was primarily designed for mobile devices, it is also fully functional on desktop browsers.
+
+Key Features:
+Developed with Angular v19
+UI built with Bootstrap for responsive design
+Optimized for mobile-first experience, with desktop compatibility
+The tool streamlines game management, enhances the player experience, and simplifies role distribution and tracking during gameplay.
+
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
 
 ## Development server
