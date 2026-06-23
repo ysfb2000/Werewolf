@@ -1,10 +1,14 @@
 import { CampType, RoleCodeType, SpecialRulesType, StepType, StoryStatusType } from "../enums";
 import { Edition } from "./edition";
+import { EditionPlayerItem } from "./edition-player-item";
 import { Player } from "./player";
 import { Result } from "./result";
 
 
 export class Story {
+    private static readonly storageKey = 'storylist';
+    private static readonly legacyStorageKey = 'StoryList';
+
     storyName: string;
     edition: Edition;
 
@@ -39,13 +43,34 @@ export class Story {
         this.saveToLocalStorage();
     }
 
-    saveToLocalStorage(): void {
-        var storyListJson = localStorage.getItem('StoryList');
+    private static readStoryList(): Story[] {
+        const currentStoryListJson = localStorage.getItem(Story.storageKey);
+        const legacyStoryListJson = localStorage.getItem(Story.legacyStorageKey);
+        const storyListJson = currentStoryListJson ?? legacyStoryListJson;
 
-        var storyList: Story[] = [];
-        if (storyListJson) {
-            storyList = JSON.parse(storyListJson);
+        if (!storyListJson) {
+            return [];
         }
+
+        try {
+            const storyList = JSON.parse(storyListJson) as Story[];
+
+            if (!currentStoryListJson && legacyStoryListJson) {
+                Story.writeStoryList(storyList);
+            }
+
+            return storyList;
+        } catch {
+            return [];
+        }
+    }
+
+    private static writeStoryList(storyList: Story[]): void {
+        localStorage.setItem(Story.storageKey, JSON.stringify(storyList));
+    }
+
+    saveToLocalStorage(): void {
+        const storyList = Story.readStoryList();
         // check if the story already exists in localStorage
         const storyExists = storyList.some((s: Story) => s.storyName === this.storyName);
         // if it doesn't exist, add it to the array
@@ -57,7 +82,18 @@ export class Story {
             storyList[index] = this;
         }
 
-        localStorage.setItem('StoryList', JSON.stringify(storyList));
+        Story.writeStoryList(storyList);
+    }
+
+    static deleteFromLocalStorage(storyName: string): void {
+        const storyList = Story.readStoryList();
+        const updatedStoryList = storyList.filter((story) => story.storyName !== storyName);
+
+        Story.writeStoryList(updatedStoryList);
+
+        if (localStorage.getItem('currentStoryName') === storyName) {
+            localStorage.removeItem('currentStoryName');
+        }
     }
 
     isIncludeRole(role: RoleCodeType): boolean {
@@ -129,19 +165,49 @@ export class Story {
     }
 
 
-    static loadStoryListFromLocalStorage(storyName: string): Story | null {
-        const storyListJson = localStorage.getItem('StoryList');
-        if (storyListJson) {
-            const storyList: Story[] = JSON.parse(storyListJson);
-            var story = storyList.find((s: Story) => s.storyName === storyName);
+    private static rehydrateEdition(rawEdition: Edition): Edition {
+        const edition = Object.assign(new Edition(rawEdition?.editionName ?? '', [], {}), rawEdition);
+        edition.player = (rawEdition?.player ?? []).map((playerItem) =>
+            Object.assign(new EditionPlayerItem(playerItem.role, playerItem.camp, playerItem.number), playerItem)
+        );
 
-            // rehydrate the edition object
-            var edition = Object.assign(new Edition('', [], {}), story?.edition);
+        return edition;
+    }
 
-            return story ? new Story(story.storyName, edition) : null;
+    private static rehydratePlayer(rawPlayer: Player): Player {
+        const player = Object.assign(new Player(rawPlayer?.id ?? 0, rawPlayer?.name ?? ''), rawPlayer);
+        if (rawPlayer?.role) {
+            player.role = Object.assign({}, rawPlayer.role);
         }
 
-        return null;
+        return player;
+    }
+
+    private static rehydrateStory(rawStory: Story): Story {
+        const story = Object.create(Story.prototype) as Story;
+
+        Object.assign(story, rawStory, {
+            edition: Story.rehydrateEdition(rawStory.edition),
+            player: (rawStory.player ?? []).map((player) => Story.rehydratePlayer(player)),
+            history: [...(rawStory.history ?? [])],
+            startTime: rawStory.startTime ? new Date(rawStory.startTime) : new Date(),
+            endTime: rawStory.endTime ? new Date(rawStory.endTime) : new Date(),
+        });
+
+        return story;
+    }
+
+    static loadAllStoriesFromLocalStorage(): Story[] {
+        return Story.readStoryList()
+            .map((story) => Story.rehydrateStory(story))
+            .sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
+    }
+
+    static loadStoryListFromLocalStorage(storyName: string): Story | null {
+        const storyList = Story.readStoryList();
+        const story = storyList.find((s: Story) => s.storyName === storyName);
+
+        return story ? Story.rehydrateStory(story) : null;
     }
 
     static getCurrentStory(): Story | null {

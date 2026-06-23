@@ -1,0 +1,94 @@
+<div class="container theme-dark manual-page py-4">
+  <div class="manual-header text-center mb-4">
+    <h2>狼人杀游戏说明</h2>
+    <p class="manual-subtitle">包含基础玩法、胜负判定，以及本助手已支持角色的能力说明。</p>
+  </div>
+
+  <section class="manual-section">
+    <h3>基础玩法</h3>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="manual-card h-100">
+          <h4>白天流程</h4>
+          <ul>
+            @for (item of dayFlow; track item) {
+            <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="manual-card h-100">
+          <h4>夜晚流程</h4>
+          <ul>
+            @for (item of nightFlow; track item) {
+            <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h3>胜负判定</h3>
+    <div class="manual-card">
+      <ul>
+        @for (rule of winRules; track rule) {
+        <li>{{ rule }}</li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="manual-section">
+    <h3>角色能力与作用</h3>
+    <p class="section-tip">以下内容基于当前项目中已内置的角色定义整理，实际对局请以所选板子特殊规则为准。</p>
+
+    <div class="camp-block">
+      <div class="camp-title good">好人阵营</div>
+      <div class="row g-3">
+        @for (role of villagerRoles; track role.roleType) {
+        <div class="col-md-6">
+          <div class="manual-card role-card h-100">
+            <div class="role-name">{{ role.name }}</div>
+            <div class="role-desc">{{ role.description }}</div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="camp-block">
+      <div class="camp-title wolf">狼人阵营</div>
+      <div class="row g-3">
+        @for (role of werewolfRoles; track role.roleType) {
+        <div class="col-md-6">
+          <div class="manual-card role-card h-100">
+            <div class="role-name">{{ role.name }}</div>
+            <div class="role-desc">{{ role.description }}</div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="camp-block">
+      <div class="camp-title neutral">第三方阵营</div>
+      <div class="row g-3">
+        @for (role of neutralRoles; track role.roleType) {
+        <div class="col-md-6">
+          <div class="manual-card role-card h-100">
+            <div class="role-name">{{ role.name }}</div>
+            <div class="role-desc">{{ role.description }}</div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="text-center mt-4">
+    <button type="button" class="btn btn-primary px-4" [routerLink]="['/']">返回首页</button>
+  </div>
+</div>

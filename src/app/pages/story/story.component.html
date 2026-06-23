@@ -12,6 +12,7 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownIcon">
               <li><a class="dropdown-item" (click)="showSpecialRules()" href="javascript:void(0);">特殊规则</a></li>
               <li><a class="dropdown-item" (click)="finishGame()" href="javascript:void(0);">结束游戏</a></li>
+              <li><a class="dropdown-item" (click)="confirmDeleteGame()" href="javascript:void(0);">删除游戏</a></li>
             </ul>
         </div>
     </div>
@@ -49,3 +50,5 @@
 
 
 </div>
+
+<app-confirm-box #confirmBox (ok)="deleteGame()"></app-confirm-box>
