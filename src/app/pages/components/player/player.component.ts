@@ -61,7 +61,11 @@ export class PlayerComponent {
   }
 
   get background(): any {
-    var color = '';
+    let color = '';
+
+    if (this.currentPlayer?.camp != CampType.Werewolf && this.currentPlayer?.isDead != true) {
+      color = '#2f9f86';
+    }
 
     if (this.currentPlayer?.camp == CampType.Werewolf) {
       color = '#9d4ff5';

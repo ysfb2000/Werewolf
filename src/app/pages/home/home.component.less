@@ -1,1 +1,48 @@
 
+.container.theme-dark {
+  min-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container.theme-dark h1,
+.container.theme-dark p,
+.container.theme-dark .home-button {
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.container.theme-dark::before {
+  content: "";
+  position: absolute;
+  inset: auto -80px -120px auto;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255, 201, 107, 0.18), transparent 68%);
+  pointer-events: none;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  letter-spacing: 0.08em;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+p {
+  color: rgba(214, 226, 240, 0.82);
+  letter-spacing: 0.04em;
+}
+
+.home-button {
+  font-size: 1rem;
+  border-width: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  backdrop-filter: blur(6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.home-button:hover,
+.home-button:focus-visible {
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}

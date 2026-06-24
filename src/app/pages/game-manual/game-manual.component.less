@@ -3,12 +3,25 @@
   padding-bottom: 32px;
 }
 
+.page-back-btn {
+  min-width: 72px;
+}
+
+.page-back-spacer {
+  width: 72px;
+}
+
+.manual-header-content {
+  flex: 1;
+}
+
 .manual-header h2 {
   margin-bottom: 8px;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
 }
 
 .manual-subtitle {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(214, 226, 240, 0.82);
   margin-bottom: 0;
 }
 
@@ -21,16 +34,17 @@
 }
 
 .manual-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
   padding: 16px 18px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
 }
 
 .manual-card h4 {
   margin-bottom: 12px;
-  color: #ffd166;
+  color: #ffd995;
 }
 
 .manual-card ul {
@@ -43,7 +57,7 @@
 }
 
 .section-tip {
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(214, 226, 240, 0.76);
   margin-bottom: 16px;
 }
 
@@ -54,9 +68,10 @@
 .camp-title {
   display: inline-block;
   margin-bottom: 12px;
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 999px;
   font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .camp-title.good {
@@ -86,7 +101,7 @@
 
 .role-desc {
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(244, 247, 251, 0.88);
 }
 
 @media (max-width: 767px) {

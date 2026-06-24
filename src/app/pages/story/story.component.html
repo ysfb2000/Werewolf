@@ -24,9 +24,9 @@
         </div>
     </div>
 
-    <div class="row mb-2 px-3 justify-content-center">
+    <div class="player-grid mb-2 px-3">
         <app-player *ngFor="let player of playerList" [(currentStory)]="this.currentStory!" [(player)]="currentStory!.player[player.id - 1]" [(skill)]="skill"
-         [(selectCount)]="selectCount" (event)="eventHandle($event)" class="col-3 px-0"></app-player>
+         [(selectCount)]="selectCount" (event)="eventHandle($event)"></app-player>
     </div>
 
     <hr>

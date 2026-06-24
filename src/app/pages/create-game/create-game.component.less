@@ -1,0 +1,33 @@
+.container.theme-dark {
+  overflow: hidden;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+label {
+  color: #d6e2f0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.row.px-4 {
+  position: relative;
+}
+
+.row.px-4::after {
+  content: "";
+  display: block;
+  width: calc(100% - 3rem);
+  margin: 14px auto 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.row.px-4:last-of-type::after {
+  display: none;
+}
+
+.text-start {
+  color: #eef4fb;
+}
