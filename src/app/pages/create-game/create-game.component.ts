@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -24,6 +24,7 @@ import { Story } from '../../shared/models/story';
 export class CreateGameComponent {
   gameName: string = '';
   selectedVersion: string = 'Werewolf';
+  isEditionPickerOpen: boolean = false;
 
   editionList: Edition[] = [];
 
@@ -37,7 +38,11 @@ export class CreateGameComponent {
 
   @ViewChild('myModal', { static: false }) myModal!: MessageBoxComponent;
 
-  constructor(private router: Router, private datePipe: DatePipe) { }
+  constructor(
+    private router: Router,
+    private datePipe: DatePipe,
+    private elementRef: ElementRef<HTMLElement>
+  ) { }
 
   ngOnInit() {
     // Initialize any data or state here if needed
@@ -48,6 +53,13 @@ export class CreateGameComponent {
     const formatTime = this.datePipe.transform(currentTime, 'yyMMdd-HH:mm');
 
     this.gameName = `Game-${formatTime}`;
+
+    if (this.editionList.length > 0) {
+      const defaultEdition = this.editionList.find((item) => item.editionName === this.selectedVersion);
+      const initialEdition = defaultEdition ?? this.editionList[0];
+      this.selectedVersion = initialEdition.editionName;
+      this.onEditionChange(this.selectedVersion);
+    }
 
   }
 
@@ -77,6 +89,44 @@ export class CreateGameComponent {
       this.currentEdition = undefined;
     }
 
+  }
+
+  openEditionPicker() {
+    this.isEditionPickerOpen = true;
+  }
+
+  toggleEditionPicker() {
+    this.isEditionPickerOpen = !this.isEditionPickerOpen;
+  }
+
+  closeEditionPicker() {
+    this.isEditionPickerOpen = false;
+  }
+
+  get selectedEdition() {
+    return this.editionList.find((item) => item.editionName === this.selectedVersion);
+  }
+
+  selectEdition(editionName: string) {
+    this.selectedVersion = editionName;
+    this.onEditionChange(editionName);
+    this.closeEditionPicker();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.isEditionPickerOpen) {
+      return;
+    }
+
+    if (!this.elementRef.nativeElement.contains(event.target as Node)) {
+      this.closeEditionPicker();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey() {
+    this.closeEditionPicker();
   }
 
   createGame() {
