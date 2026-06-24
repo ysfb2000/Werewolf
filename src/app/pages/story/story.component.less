@@ -85,6 +85,20 @@
     justify-content: center;
 }
 
+.row.justify-content-between.mb-2,
+.story-actions {
+    gap: 12px;
+}
+
+.row.justify-content-between.mb-2 > .btn,
+.story-action-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
 @media (max-width: 767px) {
     .container {
         padding-left: 10px;
@@ -95,5 +109,15 @@
     .player-grid {
         padding-left: 0.5rem !important;
         padding-right: 0.5rem !important;
+    }
+
+    .row.justify-content-between.mb-2,
+    .story-actions {
+        flex-direction: column;
+    }
+
+    .row.justify-content-between.mb-2 > .btn,
+    .story-action-btn {
+        width: 100%;
     }
 }

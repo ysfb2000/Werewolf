@@ -20,9 +20,17 @@
     --radius-sm: 12px;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html,
 body {
     min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -34,6 +42,17 @@ body {
         radial-gradient(circle at right top, rgba(255, 201, 107, 0.12), transparent 24%),
         var(--page-bg);
     background-attachment: fixed;
+}
+
+app-root {
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 body::before {
@@ -95,6 +114,19 @@ a {
 .home-button {
     width: 300px;
     height: 50px;
+}
+
+.container,
+.container-fluid {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+.container .row,
+.container-fluid .row {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .btn {
@@ -534,6 +566,12 @@ input[type="radio"] {
 }
 
 @media (max-width: 767px) {
+    .container,
+    .container-fluid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
     .theme-dark {
         border-radius: 18px;
         margin-top: 12px;

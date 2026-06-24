@@ -1,10 +1,15 @@
 
 .container.theme-dark {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
   min-height: calc(100vh - 40px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: hidden;
+  isolation: isolate;
 }
 
 .container.theme-dark h1,

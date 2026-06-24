@@ -18,3 +18,50 @@ label {
     background: #ffffff;
     border-color: rgba(66, 85, 108, 0.16);
 }
+
+#myModal .modal-content,
+.player-modal-content {
+    width: min(300px, calc(100vw - 24px)) !important;
+    max-width: 100%;
+    margin: auto;
+}
+
+#myModal .modal-content,
+.player-modal-content-lg {
+    width: min(360px, calc(100vw - 24px)) !important;
+}
+
+#myModal .form-select,
+.player-role-select {
+    width: min(220px, 100%) !important;
+}
+
+#myModal .modal-footer .btn,
+#selectGiftModal .modal-footer .btn,
+.player-modal-btn {
+    width: 100px !important;
+    max-width: 100%;
+}
+
+#myModal .modal-footer .btn:first-child,
+.player-modal-btn-sm {
+    width: 80px !important;
+}
+
+@media (max-width: 767px) {
+    #myModal .modal-content,
+    #selectGiftModal .modal-content {
+        width: calc(100vw - 24px) !important;
+    }
+
+    .player-modal-btn,
+    .player-modal-btn-sm,
+    #myModal .modal-footer .btn,
+    #selectGiftModal .modal-footer .btn {
+        width: 100%;
+    }
+
+    .modal-footer {
+        gap: 8px;
+    }
+}
