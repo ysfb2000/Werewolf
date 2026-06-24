@@ -1,31 +1,22 @@
-.info {
-    width: 80px;
-}
-
-.info-red {
-    width: 80px;
-    color: #ff9ca8;
-}
-
 .info-container {
     font-size: 12px;
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 8px;
-    margin-left: 5px;
+    gap: 6px;
     padding: 0;
+    width: 100%;
 }
 
 .container {
     min-height: calc(100vh - 16px);
     padding: 18px 14px 24px;
     color: #f4f7fb;
-    background: linear-gradient(180deg, rgba(30, 41, 59, 0.96) 0%, rgba(18, 25, 38, 0.98) 100%);
-    border: 1px solid rgba(162, 183, 209, 0.16);
-    border-radius: 24px;
-    box-shadow: 0 24px 60px rgba(4, 10, 20, 0.42);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .container h5 {
@@ -35,17 +26,19 @@
 
 .info,
 .info-red {
-    padding: 6px 10px;
-    width: auto;
-    min-width: 80px;
+    flex: 0 0 74px;
+    min-width: 0;
+    padding: 5px 4px;
     border-radius: 999px;
     text-align: center;
+    white-space: nowrap;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 18px rgba(4, 10, 20, 0.18);
 }
 
 .info-red {
+    color: #ff9ca8;
     background: rgba(255, 124, 141, 0.12);
     border-color: rgba(255, 124, 141, 0.28);
 }
@@ -85,25 +78,35 @@
     justify-content: center;
 }
 
-.row.justify-content-between.mb-2,
 .story-actions {
+    display: flex;
+    flex-wrap: nowrap;
     gap: 12px;
+    padding: 0 15px;
 }
 
-.row.justify-content-between.mb-2 > .btn,
 .story-action-btn {
     flex: 1 1 0;
     min-width: 0;
-    width: auto !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
 }
 
 @media (max-width: 767px) {
     .container {
         padding-left: 10px;
         padding-right: 10px;
-        border-radius: 18px;
+    }
+
+    .story-info-row {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+
+    .info,
+    .info-red {
+        flex-basis: calc((100% - 18px) / 4);
+        padding-left: 2px;
+        padding-right: 2px;
+        font-size: 11px;
     }
 
     .player-grid {
@@ -111,13 +114,12 @@
         padding-right: 0.5rem !important;
     }
 
-    .row.justify-content-between.mb-2,
     .story-actions {
-        flex-direction: column;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 
-    .row.justify-content-between.mb-2 > .btn,
     .story-action-btn {
-        width: 100%;
+        width: auto;
     }
 }

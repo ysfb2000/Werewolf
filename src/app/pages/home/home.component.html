@@ -1,39 +1,15 @@
-<div class="container theme-dark">
-  <div class="row">
-    <div class="col-md-12 text-center mt-5 mb-5">
-      <h1>圣梁狼人杀助手</h1>
-      <p>1.0 XJL 2026.6.23</p>
-    </div>
+<div class="container theme-dark home-page">
+  <div class="home-hero text-center">
+    <h1>圣梁狼人杀助手</h1>
+    <p>1.0 XJL 2026.6.23</p>
   </div>
 
-  <div class="row text-center mb-5">
-    <div class="col-md-12">
-      <button type="button" [routerLink]="['/create-game']" class="btn btn-outline-light home-button">开始新游戏</button>
-    </div>
-  </div>
-
-  <div class="row text-center mb-5">
-    <div class="col-md-12">
-      <button type="button" [routerLink]="['/game-list']" class="btn btn-outline-light home-button">游戏列表</button>
-    </div>
-  </div>
-
-  <div class="row text-center mb-5">
-    <div class="col-md-12">
-      <button type="button" [routerLink]="['/edition-list']" class="btn btn-outline-light home-button">版本设置</button>
-    </div>
-  </div>
-
-  <div class="row text-center mb-5">
-    <div class="col-md-12">
-      <button type="button" [routerLink]="['/game-manual']" class="btn btn-outline-light home-button">游戏说明</button>
-    </div>
-  </div>
-
-  <div class="row text-center mb-5">
-    <div class="col-md-12">
-      <button type="button" class="btn btn-outline-light home-button" (click)="showAbout()">关于</button>
-    </div>
+  <div class="home-actions">
+    <button type="button" [routerLink]="['/create-game']" class="btn btn-outline-light home-button">开始新游戏</button>
+    <button type="button" [routerLink]="['/game-list']" class="btn btn-outline-light home-button">游戏列表</button>
+    <button type="button" [routerLink]="['/edition-list']" class="btn btn-outline-light home-button">版本设置</button>
+    <button type="button" [routerLink]="['/game-manual']" class="btn btn-outline-light home-button">游戏说明</button>
+    <button type="button" class="btn btn-outline-light home-button" (click)="showAbout()">关于</button>
   </div>
 
   <app-message-box #aboutModal></app-message-box>

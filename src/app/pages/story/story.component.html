@@ -18,7 +18,7 @@
     </div>
 
 
-    <div class="row mb-2 justify-content-center px-3">
+    <div class="row mb-2 justify-content-center px-3 story-info-row">
         <div class="info-container">
             <div *ngFor="let item of infoList" [class]="{ 'info': item.livingNumber <= item.TotalNumber, 'info-red': item.livingNumber > item.TotalNumber  }">{{ item.RoleType }} {{ item.livingNumber }}/{{ item.TotalNumber }}</div>
         </div>
@@ -41,9 +41,9 @@
     <hr>
 
 
-    <div class="row justify-content-between mb-2">
-        <button class="btn btn-primary col-6" style="width: 120px; margin-left: 15px;" (click)="previous()">上一步</button>
-        <button class="btn btn-primary col-6" style="width: 120px; margin-right: 15px;" (click)="next()">下一步</button>
+    <div class="story-actions mb-2">
+        <button class="btn btn-primary story-action-btn" (click)="previous()">上一步</button>
+        <button class="btn btn-primary story-action-btn" (click)="next()">下一步</button>
     </div>
 
 
