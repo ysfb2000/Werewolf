@@ -1,46 +1,37 @@
-import { Component, ElementRef, input, output, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-confirm-box',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './confirm-box.component.html',
   styleUrl: './confirm-box.component.less'
 })
 export class ConfirmBoxComponent {
-  @ViewChild('myModal', { static: false }) myModal!: ElementRef;
-  private modalInstance!: Modal;
-
   message: string = '';
+  isVisible = false;
 
   url = input<string>();
   ok = output<void>();
 
   constructor(private router: Router) {}
 
-
-
-  show(message: string) {
+  show(message: string): void {
     this.message = message;
-    if (this.myModal) {
-      this.modalInstance = new Modal(this.myModal.nativeElement);
-      this.modalInstance.show();
-    }
+    this.isVisible = true;
   }
 
-  submit() {
+  submit(): void {
+    this.isVisible = false;
     this.ok.emit();
   }
 
   close(): void {
-    if (this.modalInstance) {
-      this.modalInstance.hide();
+    this.isVisible = false;
 
-      if (this.url() && this.url() !== '') {
-        this.router.navigate(['/edition-list']);
-      }
-      
-    };
+    if (this.url() && this.url() !== '') {
+      this.router.navigate(['/edition-list']);
+    }
   }
 }

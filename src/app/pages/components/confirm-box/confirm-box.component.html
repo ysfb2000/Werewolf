@@ -1,18 +1,18 @@
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" #myModal>
-        <div class="modal-dialog modal-dialog-centered" >
-          <div class="modal-content" style="width:300px; margin: auto;">
-            <div class="modal-header">
-              <h5 class="modal-title">确认</h5>
-              <button type="button" class="btn-close" (click)="close()"></button>
-            </div>
-            <div class="modal-body">
-              {{ message }}
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="close()">Cancel</button>
-              <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="submit()">OK</button>
-            </div>
-          </div>
-        </div>
+<div *ngIf="isVisible" class="app-modal-backdrop" (click)="close()"></div>
+<div *ngIf="isVisible" class="app-modal-shell" role="dialog" aria-modal="true" aria-labelledby="confirm-box-title">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content app-modal-panel">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirm-box-title">确认</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="close()">Cancel</button>
+        <button class="btn btn-primary btn-sm" style="width: 100px;" (click)="submit()">OK</button>
+      </div>
     </div>
+  </div>
+</div>
